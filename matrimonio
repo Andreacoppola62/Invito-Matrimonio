@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invito al Matrimonio</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fdf5f5;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #invito-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 { color: #d63384; font-size: 1.5rem; }
+
+        .buttons { margin-top: 20px; }
+
+        button {
+            padding: 10px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        #btn-accetto { background-color: #ff4d6d; color: white; }
+        #btn-rifiuto { background-color: #6c757d; color: white; }
+
+        button:hover { transform: scale(1.1); }
+
+        #messaggio {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* Animazione Emoji cadenti */
+        .emoji {
+            position: fixed;
+            top: -50px;
+            font-size: 2rem;
+            animation: fall 3s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="invito-card">
+        <img src="URL_TUA_FOTO.jpg" alt="Noi">
+        <h1>Sei invitato/a al mio matrimonio</h1>
+        
+        <div class="buttons">
+            <button id="btn-accetto">Accetto</button>
+            <button id="btn-rifiuto">Non accetto</button>
+        </div>
+
+        <div id="messaggio"></div>
+    </div>
+
+    <audio id="audio-si" src="marcia.mp3"></audio>
+    <audio id="audio-no" src="get-you-the-moon.mp3"></audio>
+
+    <script>
+        const btnAccetto = document.getElementById('btn-accetto');
+        const btnRifiuto = document.getElementById('btn-rifiuto');
+        const messaggio = document.getElementById('messaggio');
+        const audioSi = document.getElementById('audio-si');
+        const audioNo = document.getElementById('audio-no');
+
+        function creaEffetto(emoji) {
+            for (let i = 0; i < 50; i++) {
+                const el = document.createElement('div');
+                el.classList.add('emoji');
+                el.innerText = emoji;
+                el.style.left = Math.random() * 100 + "vw";
+                el.style.animationDuration = (Math.random() * 2 + 1) + "s";
+                document.body.appendChild(el);
+                
+                // Rimuovi dopo l'animazione
+                setTimeout(() => el.remove(), 3000);
+            }
+        }
+
+        btnAccetto.addEventListener('click', () => {
+            messaggio.innerHTML = "Ci vediamo il 16/08/2026 alla Chiesa Madre di Torre Santa Susanna ❤️";
+            audioNo.pause(); // Ferma l'altra se era partita
+            audioSi.currentTime = 0;
+            audioSi.play();
+            creaEffetto('❤️');
+        });
+
+        btnRifiuto.addEventListener('click', () => {
+            messaggio.innerHTML = "Porta almeno la busta 🖕";
+            audioSi.pause();
+            audioNo.currentTime = 0;
+            audioNo.play();
+            creaEffetto('🖕');
+        });
+    </script>
+
+</body>
+</html>
